@@ -30,4 +30,4 @@ jobs:
         distribution: 'adopt'
         java-version: 11
     - name: Compile and run (workaround ${{ matrix.workaround }})
-      run: java -cp java src/org/trap/RandomAccessFileTrap.java ${{ matrix.workaround }} main1.o
+      run: java -cp java src/org/trap/RandomAccessFileTrap.java ${{ matrix.workaround }} main.o
