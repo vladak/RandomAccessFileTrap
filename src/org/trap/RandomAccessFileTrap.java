@@ -18,6 +18,8 @@ public class RandomAccessFileTrap {
      * Free the resources related to {@link MappedByteBuffer}, in particular freeing the
      * <a href="https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/nio/Direct-X-Buffer.java.template#L79">mapped memory</a>.
      * This is workaround from <a href="https://stackoverflow.com/a/48821002/11582827">Stackoverflow</a>.
+     * The problem with this is that it uses reflection to access a method in {@code sun.misc.Unsafe},
+     * however it should not be necessary to call a cleanup method explicitly.
      * @param buffer MappedByteBuffer instance
      * @throws ClassNotFoundException
      * @throws NoSuchFieldException
