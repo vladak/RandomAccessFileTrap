@@ -16,7 +16,8 @@ try (RandomAccessFile raf = new RandomAccessFile(file.getAbsolutePath(), "r")) {
 ```
 Given the _try-with-resources_ block, the `raf` object will be closed. However, there will
 be associated resources, that will still stick around.
-This is visible in the Process Explorer (from Sysinternals) as open file handle.
+This is visible in the [Process Explorer](https://docs.microsoft.com/en-us/sysinternals/downloads/process-explorer)
+(from [Windows Sysinternals](https://docs.microsoft.com/en-us/sysinternals/)) as open file handle.
 On Windows, this means that the file cannot be deleted.
 
 This is reproducible with JDK 11 and Windows Server 2019 Standard and also when running
