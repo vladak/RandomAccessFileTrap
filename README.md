@@ -17,6 +17,8 @@ be associated resources, that will still stick around.
 This is visible in the Process Explorer (from Sysinternals) as open file handle.
 On Windows, this means that the file cannot be deleted.
 
+This is reproducible with JDK 11 and Windows Server 2019 Standard.
+
 There is a number of related questions on Stackoverflow, 
 e.g. https://stackoverflow.com/questions/25238110/how-to-properly-close-mappedbytebuffer
 
