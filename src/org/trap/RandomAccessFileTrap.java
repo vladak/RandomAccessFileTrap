@@ -78,6 +78,7 @@ public class RandomAccessFileTrap {
             Files.delete(Path.of(args[1]));
         } catch (Exception e) {
             System.err.println("got exception: " + e);
+            System.exit(1);
         }
     }
 }
