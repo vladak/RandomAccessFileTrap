@@ -14,6 +14,17 @@ import java.nio.file.Path;
 
 public class RandomAccessFileTrap {
 
+    /**
+     * Free the resources related to {@link MappedByteBuffer}, in particular freeing the
+     * <a href="https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/nio/Direct-X-Buffer.java.template#L79">mapped memory</a>.
+     * This is workaround from <a href="https://stackoverflow.com/a/48821002/11582827">Stackoverflow</a>.
+     * @param buffer MappedByteBuffer instance
+     * @throws ClassNotFoundException
+     * @throws NoSuchFieldException
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
     private static void cleanup(MappedByteBuffer buffer)
             throws ClassNotFoundException, NoSuchFieldException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Class<?> unsafeClass = Class.forName("sun.misc.Unsafe");
