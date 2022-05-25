@@ -26,5 +26,7 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: 11
-    - name: Compile and run
-      run: java -cp java src/org/trap/RandomAccessFileTrap.java
+    - name: Compile and run without the workaround
+      run: java -cp java src/org/trap/RandomAccessFileTrap.java 0 main1.o
+    - name: Compile and run with the workaround
+      run: java -cp java src/org/trap/RandomAccessFileTrap.java 1 main2.o
