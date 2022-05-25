@@ -1,3 +1,5 @@
+[![Build](https://github.com/vladak/RandomAccessFileTrap/actions/workflows/build.yml/badge.svg)](https://github.com/vladak/RandomAccessFileTrap/actions/workflows/build.yml)
+
 # RandomAccessFile trap
 
 This repository contains code to demonstrate the pitfall of using 
@@ -17,7 +19,9 @@ be associated resources, that will still stick around.
 This is visible in the Process Explorer (from Sysinternals) as open file handle.
 On Windows, this means that the file cannot be deleted.
 
-This is reproducible with JDK 11 and Windows Server 2019 Standard.
+This is reproducible with JDK 11 and Windows Server 2019 Standard and also when running
+the test using Github actions. Click on the Github actions badge above and see how the build matrix
+plays out for a particular workflow run.
 
 There is a number of related questions on Stackoverflow, 
 e.g. https://stackoverflow.com/questions/25238110/how-to-properly-close-mappedbytebuffer
