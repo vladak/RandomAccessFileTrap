@@ -10,12 +10,15 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.os }} with Java 11
+    name: ${{ matrix.os }} with Java 11 (workaround ${{ matrix.workaround }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+	workaround: [0, 1]
+    env:
+      WORKAROUND: ${{ matrix.workaround }}
     steps:
     - name: Checkout master branch
       uses: actions/checkout@v3
@@ -26,7 +29,5 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: 11
-    - name: Compile and run without the workaround
-      run: java -cp java src/org/trap/RandomAccessFileTrap.java 0 main1.o
-    - name: Compile and run with the workaround
-      run: java -cp java src/org/trap/RandomAccessFileTrap.java 1 main2.o
+    - name: Compile and run (workaround ${{ matrix.workaround }})
+      run: java -cp java src/org/trap/RandomAccessFileTrap.java $WORKAROUND main1.o
