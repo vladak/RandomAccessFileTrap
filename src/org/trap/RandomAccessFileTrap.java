@@ -74,7 +74,9 @@ public class RandomAccessFileTrap {
                 System.err.println("need: <0|1> <file_path>");
                 System.exit(1);
             }
-            System.out.println(analyze(new File(args[1]), args[0].equals("1")));
+            boolean useWorkaround = args[0].equals("1");
+            System.out.println("workaround: " + useWorkaround);
+            System.out.println(analyze(new File(args[1]), useWorkaround));
             Files.delete(Path.of(args[1]));
         } catch (Exception e) {
             System.err.println("got exception: " + e);
