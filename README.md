@@ -34,3 +34,5 @@ e.g. https://stackoverflow.com/questions/25238110/how-to-properly-close-mappedby
 The point is that Java should really do better. There is [JDK-6607535](https://bugs.openjdk.java.net/browse/JDK-6607535),
 however this seems to be filed to sidestep the issue by loosening the file delete semantics rather
 than invoking the cleanup.
+
+The actual problem is tracked by [JDK-4724038](https://bugs.openjdk.java.net/browse/JDK-4724038).
