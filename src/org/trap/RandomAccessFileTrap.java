@@ -71,6 +71,9 @@ public class RandomAccessFileTrap {
                         throw new RuntimeException(e);
                     }
                     break;
+                case GC:
+                    // Has to be done outside the try-with-resources block.
+                    break;
                 default:
                     throw new RuntimeException("unknown cleanup type");
             }
