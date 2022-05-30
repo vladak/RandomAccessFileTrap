@@ -35,4 +35,18 @@ The point is that Java should really do better. There is [JDK-6607535](https://b
 however this seems to be filed to sidestep the issue by loosening the file delete semantics rather
 than invoking the cleanup.
 
-The actual problem is tracked by [JDK-4724038](https://bugs.openjdk.java.net/browse/JDK-4724038).
+The actual problem is tracked by [JDK-4724038](https://bugs.openjdk.java.net/browse/JDK-4724038). It is currently marked
+as enhancement and seems that it was created in 2002. Is is quite interesting read: it seems that proper fix would require
+changes to both the "memory model" and the compiler, there are hints at security implications
+of certain implementation of the cleanup operation, there is strong warning against invoking the cleanup operation directly
+(which most of the answers to the above SO question do).
+
+Lastly, I think this paragraph from the JDK issue is just priceless:
+> We at Sun have given this problem a lot of thought, both during the original
+development of NIO and in the time since. We have yet to come up with a way to
+implement an unmap() method that's safe, efficient, and plausibly portable
+across operating systems. We've explored several other alternatives aside from
+the two described above, but all of them were even more problematic. We'd be
+thrilled if someone could come up with a workable solution, so we'll leave this
+bug open in the hope that it will attract attention from someone more clever
+than we are.
