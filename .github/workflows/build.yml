@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.os }} with Java 11 (workaround ${{ matrix.workaround }})
+    name: ${{ matrix.os }} with Java 11 (${{ matrix.workaround }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
