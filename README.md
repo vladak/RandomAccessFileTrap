@@ -6,6 +6,9 @@ This repository contains code to demonstrate the pitfall of using
 [RandomAccessFile](https://docs.oracle.com/javase/8/docs/api/java/io/RandomAccessFile.html) 
 on Windows.
 
+The `main.o` file is just a random ELF file (okay, no so random, it comes from [OpenGrok](https://github.com/opengrok/opengrok) test data),
+in fact any other non-empty file would do. It just happens to be the file I hit this issue for the first time with.
+
 When using `RandomAccessFile`, the pattern usually looks like this:
 ```java
 try (RandomAccessFile raf = new RandomAccessFile(file.getAbsolutePath(), "r")) {
