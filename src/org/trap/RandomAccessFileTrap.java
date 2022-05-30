@@ -77,6 +77,9 @@ public class RandomAccessFileTrap {
             boolean useWorkaround = args[0].equals("1");
             System.out.println("workaround: " + useWorkaround);
             System.out.println(analyze(new File(args[1]), useWorkaround));
+            // The delete operation will fail on Windows without the workaround with:
+            //   java.nio.file.FileSystemException: C:\...\main.o:
+            //     The process cannot access the file because it is being used by another process.
             Files.delete(Path.of(args[1]));
         } catch (Exception e) {
             System.err.println("got exception: " + e);
