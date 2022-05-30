@@ -13,6 +13,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class RandomAccessFileTrap {
+    enum CleanupType {
+        NO_CLEANUP,
+        UNSAFE,
+        GC
+    }
 
     /**
      * Free the resources related to {@link MappedByteBuffer}, in particular freeing the
@@ -46,22 +51,28 @@ public class RandomAccessFileTrap {
      * a cleanup method from {@code sun.misc.Unsafe}. This poses a trap for those who assume that closing
      * the {@link RandomAccessFile} is enough to free all resources associated.
      * @param file File object
-     * @param doCleanup whether to use the workaround for closing the resources
+     * @param cleanupType type of the cleanup to perform for closing the resources
      * @return a String representation of the first integer in the file
      * @throws IOException on error
      */
-    private static String analyze(File file, boolean doCleanup) throws IOException {
+    private static String analyze(File file, CleanupType cleanupType) throws IOException {
         try (RandomAccessFile raf = new RandomAccessFile(file.getAbsolutePath(), "r")) {
             FileChannel fch = raf.getChannel();
             MappedByteBuffer buffer = fch.map(FileChannel.MapMode.READ_ONLY, 0, fch.size());
             String retval = String.valueOf(buffer.getInt());
 
-            if (doCleanup) {
-                try {
-                    cleanup(buffer);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+            switch (cleanupType) {
+                case NO_CLEANUP:
+                    break;
+                case UNSAFE:
+                    try {
+                        cleanup(buffer);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                default:
+                    throw new RuntimeException("unknown cleanup type");
             }
 
             return retval;
@@ -71,15 +82,19 @@ public class RandomAccessFileTrap {
     public static void main(String[] args) {
         try {
             if (args.length != 2) {
-                System.err.println("need: <0|1> <file_path>");
+                System.err.println("need: <NO_CLEANUP|UNSAFE|GC> <file_path>");
                 System.exit(1);
             }
-            boolean useWorkaround = args[0].equals("1");
-            System.out.println("workaround: " + useWorkaround);
-            System.out.println(analyze(new File(args[1]), useWorkaround));
+            CleanupType cleanupType = Enum.valueOf(CleanupType.class, args[0]);
+            System.out.println("workaround: " + cleanupType);
+            System.out.println(analyze(new File(args[1]), cleanupType));
             // The delete operation will fail on Windows without the workaround with:
             //   java.nio.file.FileSystemException: C:\...\main.o:
             //     The process cannot access the file because it is being used by another process.
+            if (cleanupType.equals(CleanupType.GC)) {
+                // SonarLint says: "do not try to by smarter than the GC. Remove this call."
+                System.gc();
+            }
             Files.delete(Path.of(args[1]));
         } catch (Exception e) {
             System.err.println("got exception: " + e);
